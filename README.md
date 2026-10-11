@@ -1,4 +1,4 @@
-# 📊 YouTube Comment Sentiment Analysis
+# YouTube Comment Sentiment Analysis
 
 A fully interactive web application built with **Streamlit** for downloading YouTube comments and analyzing their sentiment using several NLP models, including:
 
@@ -12,31 +12,31 @@ A fully interactive web application built with **Streamlit** for downloading You
 
 ## App Capabilities
 
-✓ Automatic extraction of YouTube comments
-✓ CSV file upload
-✓ Comparison of multiple NLP models
-✓ Language detection and filtering
-✓ Confidence-based hybrid model
-✓ Confusion matrix display
-✓ Downloadable results
+* Automatic extraction of YouTube comments
+* CSV file upload
+* Comparison of multiple NLP models
+* Language detection and filtering
+* Confidence-based hybrid model
+* Confusion matrix display
+* Downloadable results
 
 ---
 
-## 🚀 Features
+## Features
 
-### 🔹 1. Fetching YouTube Comments
+### 1. Fetching YouTube Comments
 
 By entering a video link and an API key, you can fetch up to **5,000 comments** through the YouTube Data API.
 
 ---
 
-### 🔹 2. CSV Upload
+### 2. CSV Upload
 
 You can upload a `.csv` file containing a `Comment` column to run the analysis offline.
 
 ---
 
-### 🔹 3. Multiple NLP Models
+### 3. Multiple NLP Models
 
 You can run sentiment analysis with the following models:
 
@@ -50,13 +50,13 @@ You can run sentiment analysis with the following models:
 
 ---
 
-### 🔹 4. Language Detection
+### 4. Language Detection
 
 Using the `langdetect` library, non-English comments are identified and labeled.
 
 ---
 
-### 🔹 5. Preprocessing Pipeline
+### 5. Preprocessing Pipeline
 
 Includes the following steps:
 
@@ -69,7 +69,7 @@ Includes the following steps:
 
 ---
 
-### 🔹 6. Downloadable Output
+### 6. Downloadable Output
 
 Each model tab includes:
 
@@ -86,7 +86,7 @@ Each model tab includes:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 project/
@@ -101,7 +101,7 @@ project/
 
 ---
 
-## 🔧 Project Setup
+## Project Setup
 
 ### 1. Install dependencies
 
@@ -119,7 +119,7 @@ streamlit run app.py
 
 ---
 
-## 🔑 Setting Up the YouTube API
+## Setting Up the YouTube API
 
 To use API mode:
 
@@ -129,7 +129,7 @@ To use API mode:
 
 ---
 
-## 🧠 How the Hybrid Model Works
+## How the Hybrid Model Works
 
 1. Run Logistic Regression + VADER
 2. If the confidence is low, send the text to RoBERTa
@@ -144,7 +144,7 @@ This approach improves accuracy and reduces the cost of using RoBERTa.
 
 ---
 
-## 📈 Model Comparison
+## Model Comparison
 
 When multiple models are run, the system automatically:
 
@@ -154,7 +154,7 @@ When multiple models are run, the system automatically:
 
 ---
 
-## 🛡 Error Handling and User Experience
+## Error Handling and User Experience
 
 * Fallback when HuggingFace, a GPU, or langdetect is unavailable
 * Spinners and progress bars in Streamlit
