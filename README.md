@@ -1,108 +1,109 @@
+# 📊 YouTube Comment Sentiment Analysis
 
-# 📊 تحلیل احساسات نظرات یوتیوب
-
-یک وب‌اپلیکیشن کاملاً تعاملی ساخته‌شده با **Streamlit** برای دانلود نظرات یوتیوب و تحلیل احساسات آن‌ها با استفاده از چندین مدل NLP شامل:
+A fully interactive web application built with **Streamlit** for downloading YouTube comments and analyzing their sentiment using several NLP models, including:
 
 * **Twitter RoBERTa (HuggingFace)**
-* **مدل هیبریدی (LR-VADER → در صورت عدم اطمینان RoBERTa)**
-* **مدل Logistic Regression + ویژگی‌های VADER**
-* **مدل Linear SVM + ویژگی‌های VADER**
-* **مدل‌های سفارشی ذخیره‌شده با joblib**
+* **Hybrid model (LR-VADER → falls back to RoBERTa when uncertain)**
+* **Logistic Regression + VADER features model**
+* **Linear SVM + VADER features model**
+* **Custom models saved with joblib**
 
 ---
 
-## قابلیت‌های اپلیکیشن
+## App Capabilities
 
-✓ استخراج خودکار نظرات یوتیوب
-✓ امکان آپلود فایل CSV
-✓ مقایسه چند مدل مختلف NLP
-✓ تشخیص زبان و فیلتر کردن آن
-✓ مدل هیبریدی مبتنی بر confidence
-✓ نمایش ماتریس درهم‌ریختگی (Confusion Matrix)
-✓ دانلود خروجی نتایج
-
----
-
-## 🚀 ویژگی‌ها
-
-### 🔹 1. دریافت نظرات یوتیوب
-
-با وارد کردن لینک ویدیو + API Key می‌توانید تا **۵۰۰۰ کامنت** را از طریق YouTube Data API دریافت کنید.
+✓ Automatic extraction of YouTube comments
+✓ CSV file upload
+✓ Comparison of multiple NLP models
+✓ Language detection and filtering
+✓ Confidence-based hybrid model
+✓ Confusion matrix display
+✓ Downloadable results
 
 ---
 
-### 🔹 2. آپلود CSV
+## 🚀 Features
 
-می‌توانید یک فایل `.csv` که شامل ستون `Comment` است آپلود کنید تا تحلیل آفلاین انجام شود.
+### 🔹 1. Fetching YouTube Comments
 
----
-
-### 🔹 3. مدل‌های مختلف NLP
-
-می‌توانید تحلیل احساسات را با مدل‌های زیر انجام دهید:
-
-| مدل                   | توضیح                                                     |
-| --------------------- | --------------------------------------------------------- |
-| **Twitter-RoBERTa**   | مدل ترنسفورمر از HuggingFace (بالاترین دقت)               |
-| **Hybrid Model**      | ترکیب LR + VADER و در صورت عدم اطمینان استفاده از RoBERTa |
-| **LR-VADER Models**   | رگرسیون لجستیک با ویژگی‌های VADER                         |
-| **Linear SVM Models** | مدل SVM با ویژگی‌های VADER                                |
-| **All Models**        | اجرای همه مدل‌ها و مقایسه آن‌ها                           |
+By entering a video link and an API key, you can fetch up to **5,000 comments** through the YouTube Data API.
 
 ---
 
-### 🔹 4. تشخیص زبان
+### 🔹 2. CSV Upload
 
-با استفاده از کتابخانه `langdetect`، کامنت‌های غیرانگلیسی شناسایی و برچسب‌گذاری می‌شوند.
+You can upload a `.csv` file containing a `Comment` column to run the analysis offline.
 
 ---
 
-### 🔹 5. مراحل پیش‌پردازش (Preprocessing Pipeline)
+### 🔹 3. Multiple NLP Models
 
-شامل موارد زیر است:
+You can run sentiment analysis with the following models:
 
-* حذف و نرمال‌سازی URL و mentionها
-* تبدیل ایموجی‌ها (emoji demojization)
+| Model                 | Description                                                                  |
+| --------------------- | ---------------------------------------------------------------------------- |
+| **Twitter-RoBERTa**   | Transformer model from HuggingFace (highest accuracy)                        |
+| **Hybrid Model**      | Combines LR + VADER, and uses RoBERTa when the confidence is low             |
+| **LR-VADER Models**   | Logistic regression with VADER features                                      |
+| **Linear SVM Models** | SVM model with VADER features                                                |
+| **All Models**        | Runs all models and compares them                                            |
+
+---
+
+### 🔹 4. Language Detection
+
+Using the `langdetect` library, non-English comments are identified and labeled.
+
+---
+
+### 🔹 5. Preprocessing Pipeline
+
+Includes the following steps:
+
+* Removing and normalizing URLs and mentions
+* Converting emojis to text (emoji demojization)
 * Lemmatization
-* استخراج ویژگی‌های VADER
-* پاک‌سازی با Regex
-* استفاده از tokenizer مربوط به HuggingFace
+* Extracting VADER features
+* Cleaning with regex
+* Using the HuggingFace tokenizer
 
 ---
 
-### 🔹 6. خروجی قابل دانلود
+### 🔹 6. Downloadable Output
 
-هر تب مربوط به مدل شامل موارد زیر است:
+Each model tab includes:
 
-* نمودار دایره‌ای احساسات
-* نمایش تصمیم مدل در حالت هیبریدی
-* ماتریس درهم‌ریختگی (Confusion Matrix)
-* دکمه دانلود فایل `.csv`
+* Sentiment pie chart
+* Display of the model's decision in hybrid mode
+* Confusion matrix
+* Button to download a `.csv` file
 
 ---
 
-## نحوه عملکرد سامانه
+## How the System Works
 
-![نحوه عملکرد سامانه](Diagram.png)
+![How the system works](photos/Diagram.png)
+
 ---
-## 📂 ساختار پروژه
+
+## 📂 Project Structure
 
 ```text
 project/
 │
-├── app.py                  # اپلیکیشن اصلی Streamlit
+├── app.py                  # Main Streamlit application
 ├── final_lr_sentiment_model.joblib
 ├── more_data_lr_model.joblib
 ├── final_linear_svm_model.joblib
 ├── linear_svm_model.joblib
-└── roberta-local/          # (اختیاری) مدل RoBERTa دانلودشده به صورت محلی
+└── roberta-local/          # (Optional) RoBERTa model downloaded locally
 ```
 
 ---
 
-## 🔧 راه‌اندازی پروژه
+## 🔧 Project Setup
 
-### 1. نصب وابستگی‌ها
+### 1. Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -110,7 +111,7 @@ pip install -r requirements.txt
 
 ---
 
-### 2. اجرای اپلیکیشن
+### 2. Run the application
 
 ```bash
 streamlit run app.py
@@ -118,55 +119,57 @@ streamlit run app.py
 
 ---
 
-## 🔑 تنظیم API یوتیوب
+## 🔑 Setting Up the YouTube API
 
-برای استفاده از حالت API:
+To use API mode:
 
-1. ساخت API Key در Google Cloud Console
-2. فعال‌سازی **YouTube Data API v3**
-3. وارد کردن API Key در رابط کاربری
-
----
-
-## 🧠 نحوه عملکرد مدل هیبریدی
-
-1. اجرای Logistic Regression + VADER
-2. اگر میزان اطمینان (confidence) کم باشد، ارسال متن به RoBERTa
-3. ترکیب نتایج
-4. خروجی شامل:
-
-   * احساس (Sentiment)
-   * میزان اطمینان
-   * اینکه کدام مدل تصمیم گرفته است
-
-این روش باعث افزایش دقت و کاهش هزینه استفاده از RoBERTa می‌شود.
+1. Create an API key in Google Cloud Console
+2. Enable **YouTube Data API v3**
+3. Enter the API key in the user interface
 
 ---
 
-## 📈 مقایسه مدل‌ها
+## 🧠 How the Hybrid Model Works
 
-زمانی که چند مدل اجرا می‌شوند، سیستم به صورت خودکار:
+1. Run Logistic Regression + VADER
+2. If the confidence is low, send the text to RoBERTa
+3. Combine the results
+4. The output includes:
 
-* هر مدل را با RoBERTa مقایسه می‌کند
-* میزان توافق (agreement score) را محاسبه می‌کند
-* ماتریس درهم‌ریختگی را برای کامنت‌های انگلیسی تولید می‌کند
+   * Sentiment
+   * Confidence level
+   * Which model made the decision
+
+This approach improves accuracy and reduces the cost of using RoBERTa.
 
 ---
 
-## 🛡 مدیریت خطا و تجربه کاربری
+## 📈 Model Comparison
 
-* fallback در صورت نبود HuggingFace یا GPU یا langdetect
-* استفاده از spinner و progress bar در Streamlit
-* نمایش هشدارهای واضح برای کاربر
-* لاگ‌گیری از خطاها به صورت robust
+When multiple models are run, the system automatically:
 
+* Compares each model against RoBERTa
+* Calculates the agreement score
+* Generates the confusion matrix for English comments
 
-## تصاویری از خروجی
 ---
-![output1](output1.png)
+
+## 🛡 Error Handling and User Experience
+
+* Fallback when HuggingFace, a GPU, or langdetect is unavailable
+* Spinners and progress bars in Streamlit
+* Clear warnings shown to the user
+* Robust error logging
+
 ---
-![output2](output2.png)
+
+## Output Screenshots
+
 ---
-![output3](output3.png)
+![output1](photos/output1.png)
 ---
-![output4](output4.png)
+![output2](photos/output2.png)
+---
+![output3](photos/output3.png)
+---
+![output4](photos/output4.png)
