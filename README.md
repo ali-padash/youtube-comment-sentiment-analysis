@@ -2,11 +2,38 @@
 
 A fully interactive web application built with **Streamlit** for downloading YouTube comments and analyzing their sentiment using several NLP models, including:
 
-* **Twitter RoBERTa (HuggingFace)**
-* **Hybrid model (LR-VADER → falls back to RoBERTa when uncertain)**
+* **Twitter-RoBERTa (Hugging Face)**
+* **Hybrid model (LR-VADER → falls back to Twitter-RoBERTa when uncertain)**
 * **Logistic Regression + VADER features model**
 * **Linear SVM + VADER features model**
 * **Custom models saved with joblib**
+
+---
+
+## About This Project (BSc Thesis)
+
+This app is the practical part of my BSc thesis in Computer Engineering at K. N. Toosi University of Technology (2025), *Sentiment Analysis of User Comments Using Artificial Intelligence* (grade 19.5 / 20).
+
+Transformer models classify the sentiment of social-media text well, but they are heavy to run. The thesis studies how closely lightweight classifiers can imitate a large transformer, Twitter-RoBERTa (`cardiffnlp/twitter-roberta-base-sentiment`), on three-class sentiment (positive, neutral, negative) of YouTube comments. Twitter-RoBERTa acts as the teacher, and Logistic Regression and Linear SVM models on TF-IDF features act as the students.
+
+What was tried:
+
+* **Weak supervision:** more than 80,000 extra comments collected with the YouTube Data API v3 and pseudo-labelled by Twitter-RoBERTa, with low-confidence labels filtered out
+* **Paraphrase augmentation** with the small language model Gemma 3
+* **VADER sentiment-lexicon features** added to the TF-IDF representation, with hyperparameters tuned by grid search
+
+### Results
+
+Macro F1 of the student models against Twitter-RoBERTa's labels, on a public dataset of about 18,400 YouTube comments:
+
+| Model               | Baseline | With VADER features + weak supervision |
+| ------------------- | -------- | -------------------------------------- |
+| Logistic Regression | 66.4%    | 72.2%                                  |
+| Linear SVM          | 65.1%    | 72.3%                                  |
+
+* Weak supervision helped more than paraphrase augmentation.
+* The VADER features were a key factor in the improvement.
+* The app's hybrid mode builds on this: the fast model labels most comments, and only low-confidence ones are passed to Twitter-RoBERTa.
 
 ---
 
@@ -42,8 +69,8 @@ You can run sentiment analysis with the following models:
 
 | Model                 | Description                                                                  |
 | --------------------- | ---------------------------------------------------------------------------- |
-| **Twitter-RoBERTa**   | Transformer model from HuggingFace (highest accuracy)                        |
-| **Hybrid Model**      | Combines LR + VADER, and uses RoBERTa when the confidence is low             |
+| **Twitter-RoBERTa**   | Transformer model from Hugging Face (the teacher and reference model)        |
+| **Hybrid Model**      | Combines LR + VADER, and uses Twitter-RoBERTa when the confidence is low     |
 | **LR-VADER Models**   | Logistic regression with VADER features                                      |
 | **Linear SVM Models** | SVM model with VADER features                                                |
 | **All Models**        | Runs all models and compares them                                            |
@@ -132,7 +159,7 @@ To use API mode:
 ## How the Hybrid Model Works
 
 1. Run Logistic Regression + VADER
-2. If the confidence is low, send the text to RoBERTa
+2. If the confidence is low, send the text to Twitter-RoBERTa
 3. Combine the results
 4. The output includes:
 
@@ -140,7 +167,7 @@ To use API mode:
    * Confidence level
    * Which model made the decision
 
-This approach improves accuracy and reduces the cost of using RoBERTa.
+This approach keeps the results close to Twitter-RoBERTa while running the heavy model only on low-confidence comments.
 
 ---
 
@@ -148,7 +175,7 @@ This approach improves accuracy and reduces the cost of using RoBERTa.
 
 When multiple models are run, the system automatically:
 
-* Compares each model against RoBERTa
+* Compares each model against Twitter-RoBERTa
 * Calculates the agreement score
 * Generates the confusion matrix for English comments
 
